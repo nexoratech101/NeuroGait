@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 /// One IMU sample streamed from the Nano 33 BLE firmware.
@@ -31,6 +32,11 @@ class ImuSample {
     required this.gyroY,
     required this.gyroZ,
   });
+
+  /// Magnitude of the acceleration vector, in g. ~1.0 at rest (gravity);
+  /// spikes well above or drops well below that indicate sudden motion.
+  double get accelMagnitude =>
+      sqrt(accelX * accelX + accelY * accelY + accelZ * accelZ);
 
   List<Object> toCsvRow() => [
         timestampMs,
