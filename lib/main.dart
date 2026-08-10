@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ui/scan_screen.dart';
+import 'ui/connect_screen.dart';
 
 void main() {
   runApp(const GaitApp());
@@ -17,7 +17,7 @@ class GaitApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const ScanScreen(),
+      home: const ConnectScreen(),
     );
   }
 }

@@ -3,10 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gait_app/main.dart';
 
 void main() {
-  testWidgets('App launches to the scan screen', (WidgetTester tester) async {
+  testWidgets('App launches to an idle screen with a Connect button',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const GaitApp());
 
-    expect(find.text('NeuroGait — Find Device'), findsOneWidget);
-    expect(find.text('Scan'), findsOneWidget);
+    expect(find.text('NeuroGait'), findsOneWidget);
+    expect(find.text('Connect'), findsOneWidget);
   });
 }
