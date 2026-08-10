@@ -3,7 +3,7 @@ import 'dart:typed_data';
 /// One IMU sample streamed from the Nano 33 BLE firmware.
 ///
 /// Wire format (little-endian, 28 bytes total) — must stay in sync with
-/// the packet struct in firmware/nano33_imu_ble_firmware.ino:
+/// the packet struct in firmware/nano33_imu_ble_firmware/nano33_imu_ble_firmware.ino:
 ///   uint32  timestampMs   (offset 0)
 ///   float32 accelX        (offset 4)
 ///   float32 accelY        (offset 8)

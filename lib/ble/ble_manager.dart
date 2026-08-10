@@ -4,7 +4,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 import 'packet_parser.dart';
 
-/// GATT UUIDs exposed by firmware/nano33_imu_ble_firmware.ino.
+/// GATT UUIDs exposed by firmware/nano33_imu_ble_firmware/nano33_imu_ble_firmware.ino.
 /// Keep these in sync if the firmware UUIDs ever change.
 class GaitBleUuids {
   static final Guid imuService =

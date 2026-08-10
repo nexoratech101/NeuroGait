@@ -13,12 +13,12 @@
  *   offset 20: float    gyroY         (deg/s)
  *   offset 24: float    gyroZ         (deg/s)
  *
- * Board: Arduino Nano 33 BLE Sense (rev1, LSM9DS1 IMU).
- * Libraries: ArduinoBLE, Arduino_LSM9DS1.
+ * Board: Arduino Nano 33 BLE / Nano 33 BLE Sense Rev2 (BMI270 + BMM150 IMU).
+ * Libraries: ArduinoBLE, Arduino_BMI270_BMM150.
  */
 
 #include <ArduinoBLE.h>
-#include <Arduino_LSM9DS1.h>
+#include <Arduino_BMI270_BMM150.h>
 
 // Must match GaitBleUuids in lib/ble/ble_manager.dart.
 BLEService imuService("19b10000-e8f2-537e-4f6c-d104768a1214");
@@ -87,10 +87,19 @@ void loop() {
       continue;
     }
 
+    float accelX, accelY, accelZ;
+    float gyroX, gyroY, gyroZ;
+    IMU.readAcceleration(accelX, accelY, accelZ);
+    IMU.readGyroscope(gyroX, gyroY, gyroZ);
+
     ImuPacket packet;
     packet.timestampMs = now;
-    IMU.readAcceleration(packet.accelX, packet.accelY, packet.accelZ);
-    IMU.readGyroscope(packet.gyroX, packet.gyroY, packet.gyroZ);
+    packet.accelX = accelX;
+    packet.accelY = accelY;
+    packet.accelZ = accelZ;
+    packet.gyroX = gyroX;
+    packet.gyroY = gyroY;
+    packet.gyroZ = gyroZ;
 
     imuCharacteristic.writeValue(reinterpret_cast<uint8_t*>(&packet), sizeof(packet));
     lastSampleMs = now;
