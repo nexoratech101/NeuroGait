@@ -1,0 +1,73 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1a1a2e;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; background: #f6f7fb; }
+
+.app-shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 220px;
+  background: #16213e;
+  color: #e6e9f2;
+  padding: 20px 14px;
+  flex-shrink: 0;
+}
+
+.sidebar h1 { font-size: 16px; margin: 0 0 24px; }
+
+.sidebar a, .sidebar .disabled {
+  display: block;
+  color: #c6cbe0;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.sidebar a:hover { background: #22335e; }
+.sidebar .disabled { color: #6a708f; cursor: not-allowed; }
+
+.main-content { flex: 1; padding: 28px; max-width: 1100px; }
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  margin-bottom: 18px;
+}
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+
+.metric-tile { background: #f9fafc; border: 1px solid #e6e9f2; border-radius: 8px; padding: 12px; }
+.metric-tile .value { font-size: 22px; font-weight: 600; }
+.metric-tile .label { font-size: 12px; color: #666; }
+
+.tag { font-size: 10px; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+.tag-measured { background: #e2f2e2; color: #256029; }
+.tag-estimated { background: #fdf1d6; color: #8a5a00; }
+.tag-derived { background: #e3ecfa; color: #234a8a; }
+.tag-not_yet_available { background: #eee; color: #888; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+button.primary {
+  background: #3452e1; color: white; border: none; padding: 8px 16px;
+  border-radius: 6px; cursor: pointer;
+}
+
+button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 13px; }
+
+.badge-warning { color: #a15c00; }
+.notice { background: #fff8e6; border: 1px solid #f0cf7a; padding: 10px 14px; border-radius: 6px; font-size: 13px; }

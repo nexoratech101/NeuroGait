@@ -44,3 +44,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# NeuroGait Platform (backend/frontend) related
+platform/backend/__pycache__/
+platform/backend/**/__pycache__/
+platform/backend/.pytest_cache/
+platform/backend/*.egg-info/
+platform/backend/venv/
+platform/backend/.venv/
+platform/backend/test_smoke.db
+platform/frontend/node_modules/
+platform/frontend/dist/
+platform/data/raw/
+platform/data/processed/
+

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: "DejaVu Sans", sans-serif; font-size: 11pt; color: #1a1a1a; }
+  h1 { font-size: 18pt; margin-bottom: 0; }
+  h2 { font-size: 13pt; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin-top: 22px; }
+  .subtitle { color: #555; margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  td, th { padding: 4px 8px; text-align: left; border-bottom: 1px solid #eee; font-size: 10pt; }
+  th { color: #555; font-weight: normal; }
+  .tag { font-size: 8pt; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
+  .tag-measured { background: #e2f2e2; color: #256029; }
+  .tag-estimated { background: #fdf1d6; color: #8a5a00; }
+  .tag-derived { background: #e3ecfa; color: #234a8a; }
+  .footer { margin-top: 30px; padding: 12px; border: 1px solid #ccc; background: #fafafa; font-size: 9pt; font-style: italic; }
+  .quality-flags li { font-size: 9.5pt; }
+</style>
+</head>
+<body>
+  <h1>NeuroGait Session Report</h1>
+  <div class="subtitle">Research prototype -- not a diagnostic report. Generated {{ generated_at }}</div>
+
+  <h2>Patient Information</h2>
+  <table>
+    <tr><th>Name</th><td>{{ patient.full_name }}</td></tr>
+    <tr><th>Study ID</th><td>{{ patient.study_id }}</td></tr>
+    <tr><th>MS Phenotype</th><td>{{ patient.ms_phenotype or "-" }}</td></tr>
+    <tr><th>EDSS</th><td>{{ patient.edss_score if patient.edss_score is not none else "-" }}</td></tr>
+  </table>
+
+  <h2>Assessment Information</h2>
+  <table>
+    <tr><th>Session date</th><td>{{ session.assessment_date }}</td></tr>
+    <tr><th>Test type</th><td>{{ session.test_type or "-" }}</td></tr>
+    <tr><th>Processing version</th><td>{{ session.processing_version }}</td></tr>
+  </table>
+
+  <h2>Data Quality</h2>
+  <p>Data Quality Score: <strong>{{ quality_score }}</strong> / 100</p>
+  <ul class="quality-flags">
+    {% for flag in quality_flags %}<li>{{ flag }}</li>{% else %}<li>No quality issues flagged</li>{% endfor %}
+  </ul>
+
+  <h2>Gait Summary</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th><th>Status</th></tr>
+    {% for m in metrics %}
+    <tr>
+      <td>{{ m.label }}</td>
+      <td>{{ m.value if m.value is not none else "not available" }} {{ m.unit if m.value is not none else "" }}</td>
+      <td><span class="tag tag-{{ m.status }}">{{ m.status }}</span></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Comparison vs Previous / Baseline</h2>
+  <table>
+    <tr><th>Metric</th><th>Current</th><th>Previous</th><th>Change vs previous</th><th>Baseline</th><th>Change vs baseline</th></tr>
+    {% for c in comparisons %}
+    <tr>
+      <td>{{ c.metric }}</td>
+      <td>{{ c.current if c.current is not none else "-" }}</td>
+      <td>{{ c.previous if c.previous is not none else "-" }}</td>
+      <td>{{ c.change_vs_previous_pct ~ "%" if c.change_vs_previous_pct is not none else "-" }}</td>
+      <td>{{ c.baseline if c.baseline is not none else "-" }}</td>
+      <td>{{ c.change_vs_baseline_pct ~ "%" if c.change_vs_baseline_pct is not none else "-" }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Clinician Notes</h2>
+  {% for note in notes %}
+    <p><strong>{{ note.created_at }}:</strong> {{ note.note_text or "(no text)" }}</p>
+  {% else %}
+    <p>No clinician notes recorded for this session.</p>
+  {% endfor %}
+
+  <div class="footer">
+    This report presents objective gait measurements derived from wearable sensor data. It does not
+    diagnose Multiple Sclerosis, relapse, or any neurological condition, and does not independently
+    establish disease progression. All findings require clinical interpretation by the treating
+    physician in the context of the patient's full clinical picture.
+  </div>
+</body>
+</html>

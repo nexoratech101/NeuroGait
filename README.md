@@ -2,6 +2,14 @@
 
 A new Flutter project.
 
+## NeuroGait Platform (backend + web dashboard)
+
+`platform/` contains a separate, standalone server-side companion to this app
+and the `firmware/` sketches: a FastAPI backend, React dashboard, and
+Postgres database for reviewing MS gait assessments. See
+[`platform/README.md`](platform/README.md) for setup (`docker compose up`)
+and details.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

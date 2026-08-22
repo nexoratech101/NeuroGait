@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: neurogait
+      POSTGRES_PASSWORD: neurogait
+      POSTGRES_DB: neurogait
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U neurogait"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg2://neurogait:neurogait@db:5432/neurogait
+      JWT_SECRET: dev-secret-change-me
+      RAW_DATA_DIR: /data/raw
+      PROCESSED_DATA_DIR: /data/processed
+      REPORT_DIR: /data/processed/reports
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data/raw:/data/raw
+      - ./data/processed:/data/processed
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE: http://localhost:8000
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+
+volumes:
+  pgdata:
